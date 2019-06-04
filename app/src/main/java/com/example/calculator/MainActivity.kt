@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private var padNum: Int = 1
     private var compNum: Int = -1
     private lateinit var fibonacciNum: FibonacciNum
+    private lateinit var padovanNum: PadovanNum
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,11 @@ class MainActivity : AppCompatActivity() {
         sub.setText(compNum.toString())
         number = 0
         initFibNum()
+        initPadNum()
+    }
+
+    private fun initPadNum() {
+        padovanNum = PadovanNum(1, 1, 1)
     }
 
     private fun initVariable() {
@@ -57,6 +63,12 @@ class MainActivity : AppCompatActivity() {
         number++
         num.setText(number.toString())
         num1.setText(number.toString())
+        showfAddNumber()
+        showpNumber()
+        showComp()
+    }
+
+    fun showfAddNumber() {
         if (number >= 2) {
             fibNum = fibonacciNum.getNum()
             fib.setText(fibNum.toString())
@@ -64,7 +76,16 @@ class MainActivity : AppCompatActivity() {
             fibNum = 1
             fib.setText(fibNum.toString())
         }
+    }
 
+    private fun showpNumber() {
+        if (number >= 3) {
+            padNum = padovanNum.getNum()
+            pad.setText(padNum.toString())
+        } else {
+            padNum = 1
+            pad.setText(padNum.toString())
+        }
     }
 
     fun subNumber(view: View) {
@@ -72,17 +93,43 @@ class MainActivity : AppCompatActivity() {
             number--
             num.setText(number.toString())
             num1.setText(number.toString())
-            if (number == 0) {
-                fibNum = 0
-                fib.setText(fibNum.toString())
-            } else if (number >= 1) {
-                fibNum = fibonacciNum.getSubNum()
-                fib.setText(fibNum.toString())
-            }
+            showfSubNum()
+            showpSubNum()
+            showComp()
         }
+    }
+
+    private fun showfSubNum() {
+        if (number == 0) {
+            fibNum = 0
+            fib.setText(fibNum.toString())
+        } else if (number >= 1) {
+            fibNum = fibonacciNum.getSubNum()
+            fib.setText(fibNum.toString())
+        }
+    }
+
+    private fun showpSubNum() {
+        if (number > 2) {
+            padNum = padovanNum.getSubNum()
+            pad.setText(padNum.toString())
+        } else {
+            padNum = 1
+            pad.setText(padNum.toString())
+            padovanNum = PadovanNum(1, 1, 1)
+        }
+    }
+
+    fun doSubtraction(view: View) {
+        showComp()
+    }
+
+    fun showComp(){
+        sub.setText((fibNum-padNum).toString())
     }
 
     fun reset(view: View) {
         initial()
     }
+
 }
